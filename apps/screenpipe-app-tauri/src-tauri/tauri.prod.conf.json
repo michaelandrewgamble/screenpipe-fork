@@ -44,7 +44,8 @@
     ],
     "macOS": {
       "entitlements": "entitlements.plist",
-      "hardenedRuntime": true
+      "hardenedRuntime": true,
+      "signingIdentity": "local-dev-certificate"
     },
     "windows": {
       "signCommand": "powershell -ExecutionPolicy Bypass -File sign-ssl.ps1 %1"
