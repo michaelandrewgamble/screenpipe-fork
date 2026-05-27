@@ -9,7 +9,7 @@
     "devUrl": "http://localhost:3000"
   },
   "bundle": {
-    "createUpdaterArtifacts": true,
+    "createUpdaterArtifacts": false,
     "active": true,
     "publisher": "Mediar, Inc.",
     "category": "DeveloperTool",
