@@ -84,14 +84,12 @@ export function isDevBillingBypassEnabled() {
   if (process.env.NEXT_PUBLIC_SCREENPIPE_FORCE_BILLING_GATE === "true") {
     return false;
   }
-  return (
-    process.env.TAURI_ENV_DEBUG === "true" ||
-    process.env.NODE_ENV === "development" ||
-    process.env.NEXT_PUBLIC_SCREENPIPE_DEV_BILLING_BYPASS === "true" ||
-    // e2e builds bypass the paywall by default so the suite exercises real
-    // features; the dedicated gate spec re-enables it via the key above.
-    process.env.NEXT_PUBLIC_SCREENPIPE_E2E === "true"
-  );
+  // FORK PATCH (local personal-use build): the account/subscription gate is
+  // disabled. Self-built from MIT-licensed source (<= app-v2.5.27) for
+  // personal, non-commercial use; see the wrapper repo README "Engine
+  // Licensing". The force-on hooks above (E2E key / FORCE_BILLING_GATE) still
+  // win, so the entitlement flow remains testable.
+  return true;
 }
 
 // Show the dev-only login helper (paste a token / screenpipe:// URL) when we are
