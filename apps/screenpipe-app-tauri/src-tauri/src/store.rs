@@ -1282,8 +1282,16 @@ impl SettingsStore {
 
     pub fn app_entitled_or_dev(&self) -> bool {
         // Debug builds (`bun tauri dev`, e2e, signed dev builds) are never gated.
-        // Release builds must not be bypassable via a runtime env var.
-        if cfg!(debug_assertions) {
+        //
+        // FORK PATCH (local personal-use build): the account/subscription gate
+        // is also disabled in release builds. This binary is compiled from
+        // MIT-licensed source (<= app-v2.5.27) for personal, non-commercial use;
+        // see the wrapper repo README "Engine Licensing". Defaults to bypass;
+        // set SCREENPIPE_APP_GATE=enforce to restore upstream gating. The env
+        // read keeps this runtime-evaluated (no const-unreachable on the rest).
+        if cfg!(debug_assertions)
+            || std::env::var("SCREENPIPE_APP_GATE").as_deref() != Ok("enforce")
+        {
             return true;
         }
 
